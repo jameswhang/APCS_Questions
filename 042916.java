@@ -22,8 +22,10 @@ class Solution {
     StrCompressor str1 = new StrCompressor();
     //System.out.println(str1.compress("aabb"));
     //System.out.println(str1.compress("bbbdddddddeeff00"));
-    intFinder f = new intFinder();
-    System.out.println(f.binarySearch(14));
+    
+    CAESAR c = new CAESAR("Nyrk rsflk kyzj dvjjrxvr");
+    CAESAR c2 = new CAESAR(c.simpleEncrypt(3));
+    c.simpleDecrypt();
   }
   
   
@@ -42,6 +44,76 @@ class Solution {
   }
   
   
+  class CAESAR {
+    private String str;
+    /*
+          plaintext: plain 한 text, "Hello"
+          encrypt -> 
+          encrypted Text: "Rfwax"
+          decrypt -> 
+          encrypted text -> plaintext
+    
+    
+    1) Simple CAESAR 
+      "a b c d"
+      =>
+      "e f g h"
+      
+      
+    2) 
+      "a b c d" 1 3 8 4
+      "b e k h"
+      
+      
+      
+      
+      Kyzj zj r jvtivk dvjjrxv
+    */
+    
+    public CAESAR(String s) {
+      str = s;
+    }
+    
+    
+    public String simpleEncrypt(int i) {
+      char[] c = str.toCharArray();
+      String result = "";
+      for(int k = 0; k < c.length; k++) {
+        char ch = c[k];
+        result += (char)(ch + i);
+      }
+      return result;
+    }
+    
+    public String simpleDecrypt(int i) {
+      char[] c = str.toCharArray();
+      String result = "";
+      for(int k = 0; k < c.length; k++) {
+        char ch = c[k];
+        if (ch == ' ') {
+          result += ' ';
+        } else {
+          if ((char)(ch -i) < 'a') {
+            // 돌아가기
+            char charac = (char)('z' - ('a' - (ch - i)));
+            result += charac;
+          } else {
+            result += (char)(ch - i);  
+          }
+        }
+      }
+      return result;
+    }
+    
+    public void simpleDecrypt() {
+      
+      //for(int i = 0; i < st.length; i++) {
+        for(int j = 0; j < 26; j++) {
+          System.out.println(simpleDecrypt(j));
+        }
+      //}
+    }
+  }
   
   
   
@@ -71,9 +143,6 @@ class Solution {
       } else {
         return -1;
       }
-      
-      
-      return binarySearchHelper(target, 0, 9);
     }
     
     public int binarySearchHelper(int target, int low, int high) {
